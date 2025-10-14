@@ -50,3 +50,23 @@ def SSELoss(X, w, y):
     y_hat = X.dot(w)
     SSE = (y - y_hat).T.dot(y - y_hat)
     return SSE
+
+def array_split(features, labels, rate=0.7, random_state=24):
+    """训练集和测试集切分函数
+
+    :param features: 输入的特征张量
+    :param labels：输入的标签张量
+    :param rate：训练集占所有数据的比例
+    :random_state：随机数种子值
+    :return Xtrain, Xtest, ytrain, ytest：返回特征张量的训练集、测试集，以及标签张量的训练集、测试集
+    """
+
+    np.random.seed(random_state)
+    np.random.shuffle(features)  # 对特征进行切分
+    np.random.seed(random_state)
+    np.random.shuffle(labels)  # 按照相同方式对标签进行切分
+    num_input = len(labels)  # 总数据量
+    split_indices = int(num_input * rate)  # 数据集划分的标记指标
+    Xtrain, Xtest = np.vsplit(features, [split_indices, ])
+    ytrain, ytest = np.vsplit(labels, [split_indices, ])
+    return Xtrain, Xtest, ytrain, ytest
