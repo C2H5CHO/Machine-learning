@@ -26,3 +26,27 @@ def arrayGenReg(num_examples=1000, w=[2, -1, 1], bias=True, delta=0.01, deg=1):
         labels_true = np.power(features, deg).dot(w_true)
     labels = labels_true + np.random.normal(size=labels_true.shape) * delta
     return features, labels
+
+def MSELoss(X, w, y):
+    """SSE计算函数
+
+    :param X：输入数据的特征矩阵
+    :param w：线性方程参数
+    :param y：输入数据的标签数组
+    :return MSE：返回对应数据集预测结果和真实结果的均方误差
+    """
+    y_hat = X.dot(w)
+    MSE = (y - y_hat).T.dot(y - y_hat) / len(y)
+    return MSE
+
+def SSELoss(X, w, y):
+    """SSE计算函数
+
+    :param X：输入数据的特征矩阵
+    :param w：线性方程参数
+    :param y：输入数据的标签数组
+    :return SSE：返回对应数据集预测结果和真实结果的误差平方和
+    """
+    y_hat = X.dot(w)
+    SSE = (y - y_hat).T.dot(y - y_hat)
+    return SSE
