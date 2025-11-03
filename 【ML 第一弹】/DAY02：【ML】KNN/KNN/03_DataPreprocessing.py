@@ -10,6 +10,7 @@ def data_preprocessing(X_train):
     scaler = MinMaxScaler(feature_range=(0, 1))
     ## 3.2 归一化
     X_train = scaler.fit_transform(X_train)
+
     return X_train
 
 X_train = data_preprocessing(X)
