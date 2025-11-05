@@ -3,7 +3,7 @@ from sklearn.datasets import load_iris # 鸢尾花数据集
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.model_selection import train_test_split # 划分数据集
+from sklearn.model_selection import train_test_split, GridSearchCV # 数据集划分、网格搜索
 from sklearn.preprocessing import StandardScaler # 标准化
 from sklearn.neighbors import KNeighborsClassifier # KNN算法
 from sklearn.metrics import accuracy_score # 准确率
@@ -59,8 +59,16 @@ X_test = standardScaler.transform(X_test) # 测试集标准化
 def train_model_iris(X_train, y_train):
     ## 5.1 实例化模型
     knn_iris = KNeighborsClassifier(n_neighbors=5)
-    ## 5.2 训练模型
+    ## 5.2 网格搜索
+    param_grid = {'n_neighbors': [1, 3, 5, 7, 9, 11]}
+    knn_iris = GridSearchCV(estimator=knn_iris, param_grid=param_grid, cv=5)
+    ## 5.3 训练模型
     knn_iris.fit(X_train, y_train)
+    ## 5.4 评估模型
+    print(f"best socre: {knn_iris.best_score_}")
+    print(f"best params: {knn_iris.best_params_}")
+    print(f"best estimator: {knn_iris.best_estimator_}")
+    print(f"cv results: {knn_iris.cv_results_}")
 
     return knn_iris
 
